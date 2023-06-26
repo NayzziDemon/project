@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>ИМТ</title>
+   <style type="text/css">
+      input {
+         margin-top: 10px;
+      }
+
+      button {
+         margin-left: 0px;
+         padding-left: 3%;
+         padding-right: 3%;
+         margin-top: 7px;
+      }
+
+      .box h1 {
+         color: rgb(0, 0, 0);
+         text-transform: uppercase;
+         font-weight: 500;
+      }
+
+      .box {
+         width: 700px;
+         padding: 40px;
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         background: #ffffff;
+         text-align: center;
+         box-shadow: -1px 92px 99px -62px #2ecc71, 0 1px 6px 0 #2ecc71;
+         border-radius: 5px;
+      }
+
+      .box input[type="text"],
+      .box input[type="password"] {
+         border: 0;
+         font-size: large;
+         background: none;
+         display: block;
+         margin: 20px auto;
+         text-align: center;
+         border: 2px solid #2ecc71;
+         padding: 14px 10px;
+         width: 200px;
+         outline: none;
+         color: rgb(0, 0, 0);
+         border-radius: 24px;
+         transition: 0.25s;
+      }
+
+      .box button[type="button"] {
+         border: 0;
+         background: #2ecc71;
+         display: block;
+         margin: 20px auto;
+         text-align: center;
+         border: 2px solid #2ecc71;
+         padding: 14px 40px;
+         outline: none;
+         font-size: large;
+         font-weight: 700;
+         color: rgb(255, 255, 255);
+         border-radius: 24px;
+         transition: 0.25s;
+         cursor: pointer;
+      }
+
+      .box input[type="submit"]:hover {
+         background: #2ecc71;
+      }
+      body {
+         margin: 0;
+         padding: 0;
+         font-family: sans-serif;
+         background-image: url("");
+         background-size: cover;
+         background-repeat: no-repeat;
+         background-position: top;
+      }
+   </style>
+</head>
+
+<body>
+
+   <form name="UserForm" class="box">
+      </div><h1>Калькулятор идеального веса (ИВ)</h1>
+      <h3 id="name">Ваш вес: </h3>
+      <input onchange = "ChangeMass(this)" id="mass" type="text" placeholder="Вес, кг">
+      <h3 id="name">Ваш рост: </h3>
+      <input onchange = "ChangeHeight(this)" id="height" type="text" placeholder="Рост, см" value="">
+      <h3 id="IMT">ИВ: </h3>
+      <button type="button" onclick="Play_IV()">Рассчитать</button>
+      <button type="button" onclick="Clean()">Очистка полей</button>
+      <button type="button" onclick="history.back();" >Назад</button>
+   </form>
+
+   <script>
+         function ChangeMass(input) {
+             if (input.value < 14) input.value = 14;
+            if (input.value > 660) input.value = 660;
+            IMT.innerHTML = "Пожалуйста, введите корректное значение вашего веса.";
+         }
+         function ChangeHeight(input) {
+             if (input.value < 70) input.value = 70;
+            if (input.value > 275) input.value = 275;
+            IMT.innerHTML = "Пожалуйста, введите корректное значение вашего роста.";
+         }
+        var m = document.getElementById('mass');
+        var h = document.getElementById('height');
+      function Clean() {
+         m.value = "";
+         h.value = "";
+         IMT.innerHTML = "ИМТ: ";
+      }
+      function Play_IV() {
+
+         var result;
+         var IMT;
+         var diagnoz;
+         IMT = document.getElementById('IMT');
+
+         // m.style.display="none";
+         Mass = m.value;
+         Height = h.value;
+         try {
+            if (Mass == "") throw "Введите свой вес";
+            if (isNaN(Mass)) throw "Введите свой вес числом";
+         }
+         catch (err) {
+            m.placeholder = "" + err;
+            m.value = '';
+         }
+         try {
+            if (Height == "") throw "Введите свой pocт";
+            if (isNaN(Height)) throw "Введите свой рост числом";
+         }
+         catch (error) {
+            h.placeholder = "" + error;
+            h.value = '';
+         }
+
+         result = 10 * (Height/ Mass);
+
+      if (result > 0 && Height > 0) {
+
+         if (result < 16) { 
+            diagnoz = "Выраженный дефицит массы тела";
+         } else if (result < 18.5) { 
+            diagnoz = "Недостаточная (дефицит) масса тела";
+         } else if (result > 18.5 && result < 25) { 
+            diagnoz = "Норма";
+         } else if (result > 25 && result < 30) { 
+            diagnoz = "Избыточная масса тела (предожирение)";
+         } else if (result > 30 && result < 35) { 
+            diagnoz = "Ожирение первой степени";
+         } else if (result > 35 && result < 40) { 
+            diagnoz = "Ожирение второй степени";
+         } else { 
+            diagnoz = "Ожирение третьей степени (морбидное)";
+         } 
+         IMT.innerHTML = "ИВ: " + result.toFixed(1) + " - " + diagnoz;
+         //  console.log(result.toFixed(1));
+      } else {
+         IMT.innerHTML = "ОШИБКА ВВОДА ЗНАЧЕНИЙ";
+      }
+      }
+   </script>
+
+</body>
+
+</html>
